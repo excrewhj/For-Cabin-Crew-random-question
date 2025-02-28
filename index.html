@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabin Crew Random Question</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f8f9fa; }
+        .container { margin: 50px auto; padding: 20px; background: white; border-radius: 10px; width: 50%; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .btn { display: block; width: 80%; margin: 10px auto; padding: 10px; font-size: 18px; border: none; border-radius: 5px; cursor: pointer; }
+        .purple-btn { background-color: #9370DB; color: white; }
+        .purple-btn:hover { background-color: #7B68EE; }
+        .hidden { display: none; }
+        #timer { font-size: 20px; font-weight: bold; margin-top: 10px; }
+        .copyright { font-size: 14px; color: gray; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainPage">
+        <h2>Cabin Crew Random Question</h2>
+        <button class="btn purple-btn" onclick="startQuiz()">Start Random Questions</button>
+    </div>
+
+    <div class="container hidden" id="quizPage">
+        <h2 id="question"></h2>
+        <div id="timer">Remaining Time: 100 seconds</div>
+        <button class="btn purple-btn hidden" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+        <button class="btn purple-btn hidden" id="returnBtn" onclick="returnToMain()">Return to Main Page</button>
+    </div>
+
+    <script>
+        const questions = [
+            "What is more important in your life among stability and excitement?",
+            "What do you think about health insurance?",
+            "What do you think about tourism?",
+            "What do you think about technology?",
+            "What do you think about beauty?",
+            "Tell me about Block chain",
+            "Which one do you prefer between offline class and online class?",
+            "Which one do you prefer between teamwork and alone?",
+            "Which one is important between appearance and skill?",
+            "What is your routine for efficient work?",
+            "What is the first thing you see when you meet a friend?",
+            "What is the challenge when you work?",
+            "Do you think an open mind is important for travelling?",
+            "What is your morning routine?",
+            "What question did you receive when submitting your CV?",
+            "When do you lose temper?",
+            "When do you feel happy?",
+            "What’s the biggest risk you’ve ever had?",
+            "What motivates you the most?",
+            "Have you failed on something?",
+            "What’s the biggest change in your childhood?",
+            "Tell me about your childhood memories",
+            "Have you ever had a different opinion from your parents?",
+            "Did your parents read you books when you were little?",
+            "What color motivates you?",
+            "Tell me about three things about your personality",
+            "Do you ever think out of the box?",
+            "What if you met disability?",
+            "What would you change if you became president?",
+            "What would you do if everything in the world gets worse?",
+            "What would you do if you could make a law?",
+            "What furniture do you feel most comfortable with?",
+            "Who is the most successful person?",
+            "Tell me three things you must take when you go camping.",
+            "What do you judge when you look at someone?",
+            "Pick one of the celebrities as your parents.",
+            "Tell me one important qualification of a superhero.",
+            "Do you believe violent video games affect a person’s real life?",
+            "Do you think there is a need for screen regulation for adults?",
+            "Tell me about a bad manner in the subway.",
+            "Tell me about the future of education.",
+            "What are some severe crimes in Korea?",
+            "Why do you think social media is popular?",
+            "Tell me about a weird wedding custom in your country.",
+            "What do you think about abortion?"
+        ];
+
+        let selectedQuestions = [];
+        let currentQuestionIndex = 0;
+        let timer;
+
+        function startQuiz() {
+            document.getElementById('mainPage').classList.add('hidden');
+            document.getElementById('quizPage').classList.remove('hidden');
+            selectedQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 2);
+            currentQuestionIndex = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex < selectedQuestions.length) {
+                document.getElementById('question').innerText = selectedQuestions[currentQuestionIndex];
+                document.getElementById('nextBtn').classList.remove('hidden');
+                startTimer();
+            } else {
+                document.getElementById('question').innerText = "Questions are over!";
+                document.getElementById('nextBtn').classList.add('hidden');
+                document.getElementById('returnBtn').classList.remove('hidden');
+            }
+        }
+
+        function nextQuestion() {
+            clearInterval(timer);
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        function startTimer() {
+            let timeLeft = 100;
+            document.getElementById('timer').innerText = `Remaining Time: ${timeLeft} seconds`;
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = `Remaining Time: ${timeLeft} seconds`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    currentQuestionIndex++;
+                    showQuestion();
+                }
+            }, 1000);
+        }
+
+        function returnToMain() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
